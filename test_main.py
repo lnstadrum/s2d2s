@@ -63,6 +63,16 @@ def test_argument_errors():
     space_to_depth(torch.ones(1, 1, 4, 4), 4)
 
 
+def test_backward():
+    """ Backward pass check
+    """
+    x = torch.rand(2, 4, 8, 16, requires_grad=True)
+    y = depth_to_space(x, 2)
+    y.mean().backward()
+    z = space_to_depth(x, 2)
+    z.mean().backward()
+
+
 def test_repr():
     """ String representation check
     """

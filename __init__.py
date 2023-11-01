@@ -1,4 +1,5 @@
 import torch
+from typing import Tuple
 
 
 def _depth_to_space(x: torch.Tensor, block_size: int) -> torch.Tensor:
@@ -75,18 +76,17 @@ class _DepthToSpaceFunction(torch.autograd.Function):
     """
 
     @staticmethod
-    def symbolic(g, x, factor):
-        return g.op("DepthToSpace", x, blocksize_i=factor)
+    def symbolic(g, x, blocksize: int):
+        return g.op("DepthToSpace", x, blocksize_i=blocksize)
 
     @staticmethod
     def forward(ctx, x: torch.Tensor, block_size: int) -> torch.Tensor:
-        ctx.save_for_backward(block_size)
+        ctx.block_size = block_size
         return _depth_to_space(x, block_size)
 
     @staticmethod
-    def backward(ctx, y: torch.Tensor):
-        block_size = ctx.saved_tensors
-        return _space_to_depth(y, block_size)
+    def backward(ctx, y: torch.Tensor) -> Tuple[torch.Tensor, None]:
+        return _space_to_depth(y, ctx.block_size), None
 
 
 class _SpaceToDepthFunction(torch.autograd.Function):
@@ -94,18 +94,17 @@ class _SpaceToDepthFunction(torch.autograd.Function):
     """
 
     @staticmethod
-    def symbolic(g, x, factor):
-        return g.op("SpaceToDepth", x, blocksize_i=factor)
+    def symbolic(g, x, blocksize: int):
+        return g.op("SpaceToDepth", x, blocksize_i=blocksize)
 
     @staticmethod
     def forward(ctx, x: torch.Tensor, block_size: int) -> torch.Tensor:
-        ctx.save_for_backward(block_size)
+        ctx.block_size = block_size
         return _space_to_depth(x, block_size)
 
     @staticmethod
-    def backward(ctx, y: torch.Tensor):
-        block_size = ctx.saved_tensors
-        return _depth_to_space(y, block_size)
+    def backward(ctx, y: torch.Tensor) -> Tuple[torch.Tensor, None]:
+        return _depth_to_space(y, ctx.block_size), None
 
 
 def depth_to_space(x: torch.Tensor, block_size: int):
