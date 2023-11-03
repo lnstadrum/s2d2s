@@ -1,0 +1,26 @@
+name: linux
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: main
+  schedule:
+    - cron: '5 9 2 * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: pytorch/pytorch:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Install dependencies for testing
+        run: python3 -m pip install onnx onnxruntime pytest tensorflow
+
+      - name: Run tests
+        run: python3 -m pytest

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["s2d2s"]
+exclude = ["test_*.py"]
+
+[project]
+name = "s2d2s"
+version = "1"
+description = "Depth-to-Space and Space-to-Depth PyTorch implementation compatible with onnx"
+authors = [{ name =  "lnstadrum" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]

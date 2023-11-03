@@ -1,8 +1,8 @@
-from . import space_to_depth, depth_to_space
-
 import tensorflow as tf
 import torch
 import pytest
+
+from s2d2s import space_to_depth, depth_to_space
 
 
 @pytest.mark.parametrize("block_size", [2, 3])

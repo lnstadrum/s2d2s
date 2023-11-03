@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from . import space_to_depth, depth_to_space, SpaceToDepth, DepthToSpace
+from s2d2s import space_to_depth, depth_to_space, SpaceToDepth, DepthToSpace
 
 
 @pytest.mark.parametrize("outer_dims", [(), (3, ), (2, 1), (2, 3, 4)])

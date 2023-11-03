@@ -3,7 +3,7 @@ import onnxruntime
 import pytest
 import torch
 
-from . import SpaceToDepth, DepthToSpace
+from s2d2s import SpaceToDepth, DepthToSpace
 
 
 @pytest.mark.parametrize("module", [SpaceToDepth, DepthToSpace])
