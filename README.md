@@ -1,6 +1,6 @@
 # Overview
 
-`PixelShuffle`/`PixelUnshuffle` in PyTorch and `depth_to_space`/`space_to_depth` in TensorFlow are very similar, but they are not numerically identical unless the upsampled image contains a single channel. This can be easyly verified by hand: while the tensor dimensions match between the PyTorch and TensorFlow worlds, the output channels do not follow the same order.
+`PixelShuffle`/`PixelUnshuffle` in PyTorch and `depth_to_space`/`space_to_depth` in TensorFlow are very similar, but they are not numerically identical unless the upsampled image contains a single channel. This can be easily verified by hand: while the tensor dimensions match between the PyTorch and TensorFlow worlds, the output channels do not follow the same order.
 
 However, in some deployment setups, there might be performance benefits to using the space-to-depth/depth-to-space variant. For example, at the moment of writing, [Android NN API](https://developer.android.com/ndk/guides/neuralnetworks) only supports depth-to-space and space-to-depth.
 
